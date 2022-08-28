@@ -2,8 +2,8 @@
 import tkinter
 import customtkinter
 
-customtkinter.set_appearance_mode("dark")
-customtkinter.set_default_color_theme("blue")
+customtkinter.set_appearance_mode('dark')
+customtkinter.set_default_color_theme('blue')
 
 root = customtkinter.CTk()
 root.title('POS')
@@ -47,19 +47,19 @@ frame3.place(x=10, y=530)
 frame4 = customtkinter.CTkFrame(root, width=150, height=720)
 frame4.place(x=370, y=10)
 
-textbox1 = tkinter.Text(frame1, height=1, width=3, bg='gray19', font=("Helvetica",25))
+textbox1 = tkinter.Text(frame1, height=1, width=3, bg='gray19', font=('Helvetica',25))
 textbox1.place(x=10, y=25)
 
 ############################################################
 
-mainan = ["BB112",      # 0
-          "CC191",      # 1
-          "CC195",      # 2
-          "TT131",      # 3
-          "TT95",       # 4
-          "BB103",      # 5
-          "CC161",      # 6
-          "TT104"]      # 7
+mainan = ['BB112',      # 0
+          'CC191',      # 1
+          'CC195',      # 2
+          'TT131',      # 3
+          'TT95',       # 4
+          'BB103',      # 5
+          'CC161',      # 6
+          'TT104']      # 7
 
 bb = []
 bbIndex = 0
@@ -106,7 +106,7 @@ for nama in mainan :
         elif temp == 'TT' :
             Tuttut(nama)
         else :
-            print("empty space")
+            print('empty space')
 
 
 
@@ -129,7 +129,7 @@ for index, new_val in enumerate(mainan) :
         elif tempX == 'TT' :
             print(index,temp)
         else :
-            print("empty space")
+            print('empty space')
 
 #button_1 = customtkinter.CTkButton(frame1, text='Button')
 #button_1button_1.pack()
@@ -154,79 +154,108 @@ from turtle import width
 from typing import Text
 import customtkinter
 
-customtkinter.set_appearance_mode("dark")
-customtkinter.set_default_color_theme("blue")
+customtkinter.set_appearance_mode('dark')
+customtkinter.set_default_color_theme('blue')
 
-############################################################
-bomba = {
-    "jenis"     : "BB"
-    "harga"     : 15
-    "nombor"    : ["199", "192", "193", "66", "112", "192"]
-}
-############################################################
-kepalaLori = {
-    "jenis"     : "KL"
-    "harga"     : 15
-    "nombor"    : ["199", "192", "193", "66", "112", "192"]
-}
-############################################################
-classic = {
-    "jenis"     : "CC"
-    "harga"     : 20
-    "nombor"    : ["199", "192", "193", "66", "112", "192"]
-}
-############################################################
-tututKecik = {
-    "jenis"     : "TK"
-    "harga"     : 25
-    "nombor"    : ["199", "192", "193", "66", "112", "192"]
-}
-############################################################
-tututBesaq = {
-    "jenis"     : "TB"
-    "harga"     : 30
-    "nombor"    : ["199", "192", "193", "66", "112", "192"]
-}
-############################################################
-aima = {
-    "jenis"     : "A"
-    "harga"     : 20
-    "nombor"    : ["199", "192", "193", "66", "112", "192"]
-}
-############################################################
-atvKecik = {
-    "jenis"     : "AK"
-    "harga"     : 20
-    "nombor"    : ["199", "192", "193", "66", "112", "192"]
-}
-############################################################
-atvBesaq = {
-    "jenis"     : "AB"
-    "harga"     : 25
-    "nombor"    : ["199", "192", "193", "66", "112", "192"]
-}
-############################################################
-jetski = {
-    "jenis"     : "JS"
-    "harga"     : 20
-    "nombor"    : ["199", "192", "193", "66", "112", "192"]
-}
-############################################################
-beam = {
-    "jenis"     : "B"
-    "harga"     : 20
-    "nombor"    : ["199", "192", "193", "66", "112", "192"]
-}
-############################################################
-princess = {
-    "jenis"     : "PC"
-    "harga"     : 25
-    "nombor"    : ["199", "192", "193", "66", "112", "192"]
-}
-############################################################
+
 
 
 class Pos :
+
+    mainan = ['bomba','skuter','kepalaLori','classic','tututKecik','tututBesaq','aima','atvKecik','atvBesaq','jetski','beam','princess']
+
+    senarai = (
+        ############################################################
+        {#'bomba' : 
+            'nama'      : 'Bomba',
+            'jenis'     : 'BB',
+            'harga'     : 15,
+            'nombor'    : ['199', '192', '193', '66', '112', '192']
+        },
+        ############################################################
+        {#'skuter' : {
+            'nama'      : 'Skuter',
+            'jenis'     : 'S',
+            'harga'     : 15,
+            'nombor'    : ['118', '128', '46', '149', '151']
+        },
+        ############################################################
+        {#'kepalaLori' : {
+            'nama'      : 'Kepala Lori',
+            'jenis'     : 'KL',
+            'harga'     : 15,
+            'nombor'    : ['181', '197', '111']
+        },
+        ############################################################
+        {#'classic' : {
+            'nama'      : 'Classic Car',
+            'jenis'     : 'CC',
+            'harga'     : 20,
+            'nombor'    : ['161', '190', '191', '195']
+        },
+        ############################################################
+        {#'tututKecik' : {
+            'nama'      : 'Tutut Kecil',
+            'jenis'     : 'TK',
+            'harga'     : 25,
+            'nombor'    : ['92', '93', '94', '95', '131', '0', '6', '136']
+        },
+        ############################################################
+        {#'tututBesaq' : {
+            'nama'      : 'Tutut Besar',
+            'jenis'     : 'TB',
+            'harga'     : 30,
+            'nombor'    : ['189', '200']
+        },
+        ############################################################
+        {#'aima' : {
+            'nama'      : 'Aima',
+            'jenis'     : 'A',
+            'harga'     : 20,
+            'nombor'    : ['119', '130', '139', '176', '182']
+        },
+        ############################################################
+        {#'atvKecik' : {
+            'nama'      : 'ATV Kecil',
+            'jenis'     : 'AK',
+            'harga'     : 20,
+            'nombor'    : ['154', '180', '185', '202', '204']
+        },
+        ############################################################
+        {#'atvBesaq' : {
+            'nama'      : 'ATV Besar',
+            'jenis'     : 'AB',
+            'harga'     : 25,
+            'nombor'    : ['211', '212']
+        },
+        ############################################################
+        {#'jetski' : {
+            'nama'      : 'JetSki',
+            'jenis'     : 'JS',
+            'harga'     : 20,
+            'nombor'    : ['17', '146', '156', '166', '167']
+        },
+        ############################################################
+        {#'beam' : {
+            'nama'      : 'Beam',
+            'jenis'     : 'B',
+            'harga'     : 20,
+            'nombor'    : ['4', '9', '10', '16']
+        },
+        ############################################################
+        {#'princess' : {
+            'nama'      : 'Princess Car',
+            'jenis'     : 'PC',
+            'harga'     : 25,
+            'nombor'    : ['150', '194', '196', 'BH']
+        },
+        ############################################################
+    )
+
+    senaraiMainan = dict(zip(mainan,senarai))
+
+    mainanButton = [None] * 100
+
 
     def __init__(self):
         self.root = customtkinter.CTk()
@@ -239,10 +268,10 @@ class Pos :
         self.frameEntry = customtkinter.CTkFrame(self.root, width=200, height=100)
         self.frameEntry.place(x=10, y=10)
 
-        self.entry1 = customtkinter.CTkEntry(self.frameEntry, width=95, height=70, text_font=("Helvetica",25), justify='center')
+        self.entry1 = customtkinter.CTkEntry(self.frameEntry, width=95, height=70, text_font=('Helvetica',25), justify='center')
         self.entry1.place(x=10, y=15)
         
-        self.buttonEntry = customtkinter.CTkButton(self.frameEntry, width=75, height=42, text="OK")
+        self.buttonEntry = customtkinter.CTkButton(self.frameEntry, width=75, height=42, text='OK')
         self.buttonEntry.place(x=115, y=29)
 
         self.frameMainan = customtkinter.CTkFrame(self.root, width=770, height=770)
@@ -260,24 +289,48 @@ class Pos :
         self.frameNota = customtkinter.CTkFrame(self.root, width=560, height=100)
         self.frameNota.place(x=220, y=10)
 
-        self.textBox = customtkinter.CTkTextbox(self.frameNota, width=455, height=80, fg_color='#2a2d2e', text_font=("Helvetica",25))
+        self.textBox = customtkinter.CTkTextbox(self.frameNota, width=455, height=80, fg_color='#2a2d2e', text_font=('Helvetica',25))
         self.textBox.place(x=10, y=10)
 
-        self.buttonClose = customtkinter.CTkButton(self.frameNota, width=75, height=42, text="CLOSE", command=lambda:[self.buttonClose.place_forget(),
+        self.buttonClose = customtkinter.CTkButton(self.frameNota, width=75, height=42, text='CLOSE', command=lambda:[self.buttonClose.place_forget(),
                                                                                                                       self.buttonOpen.place(x=475, y=29),
                                                                                                                       self.textBox.config(height=80),
                                                                                                                       self.frameNota.config(height=100)])
 
-        self.buttonOpen = customtkinter.CTkButton(self.frameNota, width=75, height=42, text="OPEN", command=lambda:[self.buttonClose.place(x=475, y=29),
+        self.buttonOpen = customtkinter.CTkButton(self.frameNota, width=75, height=42, text='OPEN', command=lambda:[self.buttonClose.place(x=475, y=29),
                                                                                                                     self.buttonOpen.place_forget(),
                                                                                                                     self.textBox.config(height=860),
                                                                                                                     self.frameNota.config(height=880)])
         self.buttonOpen.place(x=475, y=29)
 
+        self.loopMainan()
+
         self.root.mainloop()
 
 
-runit = Pos()
+    def loopMainan(self) :
+        j = 0
+
+        for key, val in self.senaraiMainan.items() :
+            customtkinter.CTkLabel(self.frameMainan, width=75, height=42, text=self.senaraiMainan[key]['nama'], text_font=('Helvetica',11)).grid(row=j, column=0)
+
+            for i in range(len(self.senaraiMainan[key]['nombor'])) :
+                self.mainanButton[i] = customtkinter.CTkButton(self.frameMainan, width=75, height=42,
+                                        command=lambda: self.running(self.senaraiMainan[key]['jenis'],self.senaraiMainan[key]['harga'],self.senaraiMainan[key]['nombor'][i]), 
+                                        text=self.senaraiMainan[key]['jenis']+' '+self.senaraiMainan[key]['nombor'][i])
+                self.mainanButton[i].grid(row=j, column=i+1, padx=4, pady=11)##################self.mainanButton list repair the list looping
+            
+            j+=1
+
+
+    def running(self,jenis,harga,nombor) :
+        print(self.mainanButton[0])
+        print(self.mainanButton[1])
+        print(self.mainanButton[2])
+        customtkinter.CTkButton(self.frameRun, width=75, height=42, text=jenis+' '+nombor).pack()
+
+if __name__ == '__main__':
+    Pos()
 
 
 
@@ -321,18 +374,18 @@ runit = Pos()
 
 
 
-        self.button1 = customtkinter.CTkButton(self.frame4, width=120, height=30, text="OK")
+        self.button1 = customtkinter.CTkButton(self.frame4, width=120, height=30, text='OK')
         self.button1.pack(padx=7, pady=7)
-        self.button2 = customtkinter.CTkButton(self.frame4, width=120, height=30, text="OK")
+        self.button2 = customtkinter.CTkButton(self.frame4, width=120, height=30, text='OK')
         self.button2.pack(padx=7, pady=7)
-        self.button3 = customtkinter.CTkButton(self.frame4, width=120, height=30, text="OK")
+        self.button3 = customtkinter.CTkButton(self.frame4, width=120, height=30, text='OK')
         self.button3.pack(padx=7, pady=7)
 
-        self.button4 = customtkinter.CTkButton(self.frame4, width=120, height=30, text="OK")
+        self.button4 = customtkinter.CTkButton(self.frame4, width=120, height=30, text='OK')
         self.button4.pack(padx=7, pady=7)
-        self.button5 = customtkinter.CTkButton(self.frame4, width=120, height=30, text="OK")
+        self.button5 = customtkinter.CTkButton(self.frame4, width=120, height=30, text='OK')
         self.button5.pack(padx=7, pady=7)
-        self.button6 = customtkinter.CTkButton(self.frame4, width=120, height=30, text="OK")
+        self.button6 = customtkinter.CTkButton(self.frame4, width=120, height=30, text='OK')
         self.button6.pack(padx=7, pady=7)
 
 
