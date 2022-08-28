@@ -98,7 +98,7 @@ senaraiMainan = {
  }
 
 print(senaraiMainan['skuter']['nombor'])
-'''
+
 import customtkinter, tkinter
 
 app = customtkinter.CTk()
@@ -117,3 +117,33 @@ ctk_textbox_scrollbar.grid(row=0, column=1, sticky="ns")
 tk_textbox.configure(yscrollcommand=ctk_textbox_scrollbar.set)
 
 app.mainloop()
+'''
+
+from tkinter import *
+
+a = [None] * 10
+i = 0
+b = [None] * 10
+
+root = Tk()
+
+def newbut(i) :
+    global b
+    
+    b[i] = Button(root, text=i+100, command=lambda:running())
+    b[i].pack()
+
+def running() :
+
+    global a
+    global i
+    
+    a[i] = Button(root, text=i, command=lambda:newbut(i))
+    a[i].pack()
+    i+=1
+
+running()
+
+
+
+root.mainloop()

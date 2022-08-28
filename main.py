@@ -170,7 +170,7 @@ class Pos :
             'nama'      : 'Bomba',
             'jenis'     : 'BB',
             'harga'     : 15,
-            'nombor'    : ['199', '192', '193', '66', '112', '192']
+            'nombor'    : ['199', '192', '193', '66', '112']
         },
         ############################################################
         {#'skuter' : {
@@ -310,28 +310,33 @@ class Pos :
 
     def loopMainan(self) :
         j = 0
+        z = 0
 
         for key, val in self.senaraiMainan.items() :
             customtkinter.CTkLabel(self.frameMainan, width=75, height=42, text=self.senaraiMainan[key]['nama'], text_font=('Helvetica',11)).grid(row=j, column=0)
 
             for i in range(len(self.senaraiMainan[key]['nombor'])) :
-                self.mainanButton[i] = customtkinter.CTkButton(self.frameMainan, width=75, height=42,
+                self.mainanButton[z] = customtkinter.CTkButton(self.frameMainan, width=75, height=42,
                                         command=lambda: self.running(self.senaraiMainan[key]['jenis'],self.senaraiMainan[key]['harga'],self.senaraiMainan[key]['nombor'][i]), 
                                         text=self.senaraiMainan[key]['jenis']+' '+self.senaraiMainan[key]['nombor'][i])
-                self.mainanButton[i].grid(row=j, column=i+1, padx=4, pady=11)##################self.mainanButton list repair the list looping
+                self.mainanButton[z].grid(row=j, column=i+1, padx=4, pady=11)##################self.mainanButton list repair the list looping
+                print(self.senaraiMainan[key]['nombor'][i])
+                z+=1
             
             j+=1
 
 
     def running(self,jenis,harga,nombor) :
-        print(self.mainanButton[0])
+        print(jenis)
+        print(harga)
+        print(nombor)
+        print(self.mainanButton[0].config())
         print(self.mainanButton[1])
         print(self.mainanButton[2])
         customtkinter.CTkButton(self.frameRun, width=75, height=42, text=jenis+' '+nombor).pack()
 
 if __name__ == '__main__':
     Pos()
-
 
 
 '''
