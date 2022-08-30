@@ -163,6 +163,7 @@ customtkinter.set_default_color_theme('blue')
 class Pos :
 
     mainan = ['bomba','skuter','kepalaLori','classic','tututKecik','tututBesaq','aima','atvKecik','atvBesaq','jetski','beam','princess']
+    senaraiJenis = ['BB','S','KL','CC','TK','TB','A','AK','AB','JS','B','PC']
 
     senarai = (
         ############################################################
@@ -184,14 +185,14 @@ class Pos :
             'nama'      : 'Kepala Lori',
             'jenis'     : 'KL',
             'harga'     : 15,
-            'nombor'    : ['181', '197', '111']
+            'nombor'    : ['181', '197', '152']
         },
         ############################################################
         {#'classic' : {
             'nama'      : 'Classic Car',
             'jenis'     : 'CC',
             'harga'     : 20,
-            'nombor'    : ['161', '190', '191', '195']
+            'nombor'    : ['161', '190', '191', '195', '132', '125', '113']
         },
         ############################################################
         {#'tututKecik' : {
@@ -219,7 +220,7 @@ class Pos :
             'nama'      : 'ATV Kecil',
             'jenis'     : 'AK',
             'harga'     : 20,
-            'nombor'    : ['154', '180', '185', '202', '204']
+            'nombor'    : ['154', '180', '185', '202', '204', '120']
         },
         ############################################################
         {#'atvBesaq' : {
@@ -248,13 +249,25 @@ class Pos :
             'jenis'     : 'PC',
             'harga'     : 25,
             'nombor'    : ['150', '194', '196', 'BH']
-        },
+        }
         ############################################################
+        
     )
 
     senaraiMainan = dict(zip(mainan,senarai))
 
-    mainanButton = [None] * 100
+    runLabel = [None]
+    runDrop = [None] * 10000
+    masukButton = [None] * 10000
+    cancelButton = [None] * 10000
+    runList = [None]
+    labelVar = vars()
+    masukVar = vars()
+    cancelVar = vars()
+
+    j = 0
+
+    z = 0
 
 
     def __init__(self):
@@ -263,7 +276,7 @@ class Pos :
         self.root.iconbitmap('C:/Users/kebaq/Documents/GitHub/POS-system/ceriatoys.ico')
         self.root.geometry('1200x900')
         self.root.minsize(1200,900)
-        self.root.maxsize(1200,900)
+        #self.root.maxsize(1200,900)
 
         self.frameEntry = customtkinter.CTkFrame(self.root, width=200, height=100)
         self.frameEntry.place(x=10, y=10)
@@ -277,14 +290,20 @@ class Pos :
         self.frameMainan = customtkinter.CTkFrame(self.root, width=770, height=770)
         self.frameMainan.place(x=10, y=120)
 
-        self.frameMasuk = customtkinter.CTkFrame(self.root, width=126, height=880)
+        self.frameMasuk = customtkinter.CTkFrame(self.root, width=75, height=880)
         self.frameMasuk.place(x=791, y=10)
 
-        self.frameRun = customtkinter.CTkFrame(self.root, width=126, height=880)
-        self.frameRun.place(x=927, y=10)
+        self.frameDrop = customtkinter.CTkFrame(self.root, width=75, height=880)
+        self.frameDrop.place(x=881, y=10)
 
-        self.frameCancel = customtkinter.CTkFrame(self.root, width=126, height=880)
-        self.frameCancel.place(x=1063, y=10)
+        self.frameRun = customtkinter.CTkFrame(self.root, width=75, height=880)
+        self.frameRun.place(x=971, y=10)
+
+        self.frameCancel = customtkinter.CTkFrame(self.root, width=75, height=880)
+        self.frameCancel.place(x=1061, y=10)
+
+        self.frameBayar = customtkinter.CTkFrame(self.root, width=75, height=880)
+        self.frameBayar.place(x=1151, y=10)
 
         self.frameNota = customtkinter.CTkFrame(self.root, width=560, height=100)
         self.frameNota.place(x=220, y=10)
@@ -292,12 +311,12 @@ class Pos :
         self.textBox = customtkinter.CTkTextbox(self.frameNota, width=455, height=80, fg_color='#2a2d2e', text_font=('Helvetica',25))
         self.textBox.place(x=10, y=10)
 
-        self.buttonClose = customtkinter.CTkButton(self.frameNota, width=75, height=42, text='CLOSE', command=lambda:[self.buttonClose.place_forget(),
+        self.buttonClose = customtkinter.CTkButton(self.frameNota, width=75, height=42, text='Tutup', command=lambda:[self.buttonClose.place_forget(),
                                                                                                                       self.buttonOpen.place(x=475, y=29),
                                                                                                                       self.textBox.config(height=80),
                                                                                                                       self.frameNota.config(height=100)])
 
-        self.buttonOpen = customtkinter.CTkButton(self.frameNota, width=75, height=42, text='OPEN', command=lambda:[self.buttonClose.place(x=475, y=29),
+        self.buttonOpen = customtkinter.CTkButton(self.frameNota, width=75, height=42, text='Buka', command=lambda:[self.buttonClose.place(x=475, y=29),
                                                                                                                     self.buttonOpen.place_forget(),
                                                                                                                     self.textBox.config(height=860),
                                                                                                                     self.frameNota.config(height=880)])
@@ -305,41 +324,84 @@ class Pos :
 
         self.loopMainan()
 
+        self.masaWindow()
+
         self.root.mainloop()
 
 
     def loopMainan(self) :
-        j = 0
-        z = 0
-
         for key, val in self.senaraiMainan.items() :
-            customtkinter.CTkLabel(self.frameMainan, width=75, height=42, text=self.senaraiMainan[key]['nama'], text_font=('Helvetica',11)).grid(row=j, column=0)
+            customtkinter.CTkLabel(self.frameMainan, width=75, height=42, text=self.senaraiMainan[key]['nama'], text_font=('Helvetica',11)).grid(row=self.j, column=0)
 
             for i in range(len(self.senaraiMainan[key]['nombor'])) :
-                self.mainanButton[z] = customtkinter.CTkButton(self.frameMainan, width=75, height=42,
-                                        command=lambda: self.running(self.senaraiMainan[key]['jenis'],self.senaraiMainan[key]['harga'],self.senaraiMainan[key]['nombor'][i]), 
-                                        text=self.senaraiMainan[key]['jenis']+' '+self.senaraiMainan[key]['nombor'][i])
-                self.mainanButton[z].grid(row=j, column=i+1, padx=4, pady=11)##################self.mainanButton list repair the list looping
-                print(self.senaraiMainan[key]['nombor'][i])
-                z+=1
+                self.listMainan(self.senaraiMainan[key]['jenis'],self.senaraiMainan[key]['harga'],self.senaraiMainan[key]['nombor'][i],i)
             
-            j+=1
+            self.j+=1
+
+
+    def listMainan(self,jenis,harga,nombor,index) :
+        customtkinter.CTkButton(self.frameMainan, width=75, height=42,
+                                command=lambda: self.running(jenis,harga,nombor),
+                                text=jenis+' '+nombor, 
+                                text_font=('Helvetica',11)).grid(row=self.j, column=index+1, padx=4, pady=11)
 
 
     def running(self,jenis,harga,nombor) :
-        print(jenis)
-        print(harga)
-        print(nombor)
-        print(self.mainanButton[0].config())
-        print(self.mainanButton[1])
-        print(self.mainanButton[2])
-        customtkinter.CTkButton(self.frameRun, width=75, height=42, text=jenis+' '+nombor).pack()
+        for runIndex in range(len(self.runLabel)) :
+            runIndex = len(self.runLabel)
+
+            self.runLabel.append(customtkinter.CTkEntry(self.frameRun, width=75, height=42, text_font=('Helvetica',10)))
+            self.runLabel[runIndex].insert(0,jenis+' '+nombor)
+            self.runLabel[runIndex].pack(pady=1)
+
+            clicked = customtkinter.StringVar()
+            clicked.set(jenis)
+            self.runDrop[runIndex] = customtkinter.CTkOptionMenu(self.frameDrop, values=self.senaraiJenis, variable=clicked, width=75, height=42, text_font=('Helvetica',15))
+            self.runDrop[runIndex].pack(pady=1)
+
+            self.masukButton[runIndex] = customtkinter.CTkButton(self.frameMasuk, width=75, height=42, text='Masuk', text_font=('Helvetica',10), command=lambda: self.masuk(runIndex))
+            self.masukButton[runIndex].pack(pady=1)
+            
+            self.cancelButton[runIndex] = customtkinter.CTkButton(self.frameCancel, width=75, height=42, text='Cancel', text_font=('Helvetica',10), command=lambda: self.cancel(runIndex))
+            self.cancelButton[runIndex].pack(pady=1)
+
+            break
+
+    def masuk(self,runIndex) :
+        self.runLabel[runIndex].destroy()
+        self.runDrop[runIndex].destroy()
+        self.masukButton[runIndex].destroy()
+        self.cancelButton[runIndex].destroy()
+
+
+    def cancel(self,runIndex) :
+        self.runLabel[runIndex].destroy()
+        self.runDrop[runIndex].destroy()
+        self.masukButton[runIndex].destroy()
+        self.cancelButton[runIndex].destroy()
+
+    def masaWindow(self) :
+        newWindow = customtkinter.CTkToplevel(self.root)
+        newWindow.title("Masa mainan lampu")
+        newWindow.geometry("200x200")
+        newWindow.wm_transient(self.root)
+        newWindow.grab_set()
+
+        customtkinter.CTkLabel(newWindow, text='Pilih masa :', text_font=('Helvetica')).pack(pady = 10)
+
 
 if __name__ == '__main__':
     Pos()
 
 
 '''
+
+self.mainanButton[z] = customtkinter.CTkButton(self.frameMainan, width=75, height=42,
+                                        command=lambda: customtkinter.CTkLabel(self.frameRun, width=75, height=42, text=self.senaraiMainan[key]['jenis']+' '+self.senaraiMainan[key]['nombor'][i]).pack(),
+                                        text=self.senaraiMainan[key]['jenis']+' '+self.senaraiMainan[key]['nombor'][i])
+
+self.mainanButton[z].grid(row=j, column=i+1, padx=4, pady=11)##################self.mainanButton list repair the list looping
+                
 
 
 

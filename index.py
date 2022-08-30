@@ -117,7 +117,7 @@ ctk_textbox_scrollbar.grid(row=0, column=1, sticky="ns")
 tk_textbox.configure(yscrollcommand=ctk_textbox_scrollbar.set)
 
 app.mainloop()
-'''
+
 
 from tkinter import *
 
@@ -147,3 +147,95 @@ running()
 
 
 root.mainloop()
+
+myVars = vars()
+
+myStr = 'dolu'
+myStr2 = 'doku'
+
+
+
+myVars[myStr] = 'yolo'
+myVars[myStr2] = 'meggi'
+
+print(doku)
+print(dolu)
+
+ def running(self,jenis,harga,nombor) :
+        #for runIndex
+        self.labelVar[nombor] = customtkinter.CTkLabel(self.frameRun, width=75, height=42, text=jenis+' '+nombor)
+        self.labelVar[nombor].pack(pady=1)
+
+        self.masukVar[nombor] = customtkinter.CTkButton(self.frameMasuk, width=75, height=42, text='Masuk', command=lambda: self.masuk(nombor))
+        self.masukVar[nombor].pack(pady=1)
+        
+        self.cancelVar[nombor] = customtkinter.CTkButton(self.frameCancel, width=75, height=42, text='Cancel', command=lambda: self.cancel(nombor))
+        self.cancelVar[nombor].pack(pady=1)
+
+        
+def masuk(self,nombor) :
+        print(nombor)
+        self.labelVar[nombor].destroy()
+        self.masukVar[nombor].destroy()
+        self.cancelVar[nombor].destroy()
+
+
+    def cancel(self,nombor) :
+        print(nombor)
+        self.labelVar[nombor].destroy()
+        self.masukVar[nombor].destroy()
+        self.cancelVar[nombor].destroy()
+
+from tkinter import *
+  
+# Create object
+root = Tk()
+  
+# Adjust size
+root.geometry( "200x200" )
+  
+# Dropdown menu options
+options = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+]
+  
+# datatype of menu text
+clicked = StringVar()
+  
+# initial menu text
+clicked.set( "Monday" )
+  
+# Create Dropdown menu
+drop = OptionMenu( root , clicked , *options )
+drop.pack()
+  
+# Execute tkinter
+root.mainloop()
+
+
+senarai = {
+        ############################################################
+    'bomba' : {
+        'nama'      : 'Bomba',
+        'jenis'     : 'BB',
+        'harga'     : 15,
+        'nombor'    : ['199', '192', '193', '66', '112']
+    },
+        ############################################################
+    'skuter' : {
+        'nama'      : 'Skuter',
+        'jenis'     : 'S',
+        'harga'     : 15,
+        'nombor'    : ['118', '128', '46', '149', '151']
+    }
+}
+
+for k,v in senarai.items() :
+    print(k,v)
+    '''
