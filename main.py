@@ -149,19 +149,13 @@ for index, new_val in enumerate(mainan) :
 root.mainloop()
 '''
 
-import tkinter
-from turtle import width
-from typing import Text
 import customtkinter
+import time
 
 customtkinter.set_appearance_mode('dark')
 customtkinter.set_default_color_theme('blue')
 
-
-
-
 class Pos :
-
     mainan = ['bomba','skuter','kepalaLori','classic','tututKecik','tututBesaq','aima','atvKecik','atvBesaq','jetski','beam','princess']
     senaraiJenis = ['BB','S','KL','CC','TK','TB','A','AK','AB','JS','B','PC']
 
@@ -257,9 +251,11 @@ class Pos :
     senaraiMainan = dict(zip(mainan,senarai))
 
     runLabel = [None]
-    runDrop = [None] * 10000
-    masukButton = [None] * 10000
-    cancelButton = [None] * 10000
+    runDrop = [None] * 5000
+    masukButton = [None] * 5000
+    cancelButton = [None] * 5000
+    timerMainan = [None] * 5000
+    masaMainan = [None] * 5000
     runList = [None]
     labelVar = vars()
     masukVar = vars()
@@ -269,13 +265,15 @@ class Pos :
 
     z = 0
 
+    masaLampu = 0
+
 
     def __init__(self):
         self.root = customtkinter.CTk()
         self.root.title('POS')
         self.root.iconbitmap('C:/Users/kebaq/Documents/GitHub/POS-system/ceriatoys.ico')
-        self.root.geometry('1200x900')
-        self.root.minsize(1200,900)
+        self.root.geometry('1400x900')
+        self.root.minsize(1400,900)
         #self.root.maxsize(1200,900)
 
         self.frameEntry = customtkinter.CTkFrame(self.root, width=200, height=100)
@@ -302,8 +300,11 @@ class Pos :
         self.frameCancel = customtkinter.CTkFrame(self.root, width=75, height=880)
         self.frameCancel.place(x=1061, y=10)
 
+        self.frameTimer = customtkinter.CTkFrame(self.root)
+        self.frameTimer.place(x=1151, y=10)
+
         self.frameBayar = customtkinter.CTkFrame(self.root, width=75, height=880)
-        self.frameBayar.place(x=1151, y=10)
+        self.frameBayar.place(x=1241, y=10)
 
         self.frameNota = customtkinter.CTkFrame(self.root, width=560, height=100)
         self.frameNota.place(x=220, y=10)
@@ -328,6 +329,28 @@ class Pos :
 
         self.root.mainloop()
 
+    def masaWindow(self) :
+        newWindow = customtkinter.CTkToplevel(self.root)
+        newWindow.title("Masa mainan lampu")
+        newWindow.geometry("200x200")
+        newWindow.wm_transient(self.root)
+        newWindow.grab_set()
+
+        customtkinter.CTkLabel(newWindow, text='Pilih masa :', text_font=('Helvetica')).pack(pady=10)
+
+        radio_var = customtkinter.StringVar(value=0)
+        newRadio1 = customtkinter.CTkRadioButton(newWindow, text=15, variable=radio_var, value=0).pack(pady=10)
+        newRadio2 = customtkinter.CTkRadioButton(newWindow, text=10, variable=radio_var, value=1).pack(pady=10)
+
+        customtkinter.CTkButton(newWindow, width=75, height=42,
+                                command=lambda: [self.setMasa(radio_var.get()), newWindow.destroy()],
+                                text='OK', 
+                                text_font=('Helvetica',11)).pack(pady=10)
+
+    
+    def setMasa(self,x) :
+        self.masaLampu = int(x)
+
 
     def loopMainan(self) :
         for key, val in self.senaraiMainan.items() :
@@ -350,22 +373,38 @@ class Pos :
         for runIndex in range(len(self.runLabel)) :
             runIndex = len(self.runLabel)
 
-            self.runLabel.append(customtkinter.CTkEntry(self.frameRun, width=75, height=42, text_font=('Helvetica',10)))
-            self.runLabel[runIndex].insert(0,jenis+' '+nombor)
-            self.runLabel[runIndex].pack(pady=1)
-
-            clicked = customtkinter.StringVar()
-            clicked.set(jenis)
-            self.runDrop[runIndex] = customtkinter.CTkOptionMenu(self.frameDrop, values=self.senaraiJenis, variable=clicked, width=75, height=42, text_font=('Helvetica',15))
-            self.runDrop[runIndex].pack(pady=1)
-
-            self.masukButton[runIndex] = customtkinter.CTkButton(self.frameMasuk, width=75, height=42, text='Masuk', text_font=('Helvetica',10), command=lambda: self.masuk(runIndex))
-            self.masukButton[runIndex].pack(pady=1)
-            
-            self.cancelButton[runIndex] = customtkinter.CTkButton(self.frameCancel, width=75, height=42, text='Cancel', text_font=('Helvetica',10), command=lambda: self.cancel(runIndex))
-            self.cancelButton[runIndex].pack(pady=1)
-
             break
+        
+        self.runLabel.append(customtkinter.CTkEntry(self.frameRun, width=75, height=42, text_font=('Helvetica',10)))
+        self.runLabel[runIndex].insert(0,jenis+' '+nombor)
+        self.runLabel[runIndex].pack(pady=1)
+
+        clicked = customtkinter.StringVar()
+        clicked.set(jenis)
+        self.runDrop[runIndex] = customtkinter.CTkOptionMenu(self.frameDrop, values=self.senaraiJenis, variable=clicked, width=75, height=42, text_font=('Helvetica',15))
+        self.runDrop[runIndex].pack(pady=1)
+
+        self.masukButton[runIndex] = customtkinter.CTkButton(self.frameMasuk, width=75, height=42, text='Masuk', text_font=('Helvetica',10), command=lambda: self.masuk(runIndex))
+        self.masukButton[runIndex].pack(pady=1)
+
+        self.cancelButton[runIndex] = customtkinter.CTkButton(self.frameCancel, width=75, height=42, text='Cancel', text_font=('Helvetica',10), command=lambda: self.cancel(runIndex))
+        self.cancelButton[runIndex].pack(pady=1)
+
+        if jenis in ('BB','S','KL') :
+            self.masaMainan[runIndex] = 900
+        else :
+            if self.masaLampu == 0 :
+                self.masaMainan[runIndex] = 900
+            else :
+                self.masaMainan[runIndex] = 600
+
+        self.timerMainan[runIndex] = customtkinter.CTkFrame(self.frameTimer, width=75, height=42)
+        self.timerMainan[runIndex].pack(pady=1)
+
+        self.timerLabel(runIndex)
+
+        
+
 
     def masuk(self,runIndex) :
         self.runLabel[runIndex].destroy()
@@ -380,14 +419,23 @@ class Pos :
         self.masukButton[runIndex].destroy()
         self.cancelButton[runIndex].destroy()
 
-    def masaWindow(self) :
-        newWindow = customtkinter.CTkToplevel(self.root)
-        newWindow.title("Masa mainan lampu")
-        newWindow.geometry("200x200")
-        newWindow.wm_transient(self.root)
-        newWindow.grab_set()
 
-        customtkinter.CTkLabel(newWindow, text='Pilih masa :', text_font=('Helvetica')).pack(pady = 10)
+    def timerLabel(self,runIndex) :
+        masaLabel = [None] * 5000
+        masaLabel[runIndex] = customtkinter.CTkLabel( self.timerMainan[runIndex], text=self.masaMainan[runIndex], width=75, height=42)
+        masaLabel[runIndex].pack()
+        masaLabel[runIndex].after(1000, self.update(masaLabel[runIndex],self.masaMainan[runIndex]))
+
+
+    def update(self,index,masa) :
+        newMasa = int(masa)-1
+        index.configure(text=str(newMasa))
+        index.after(1000, self.update(index,newMasa))
+
+#        masaLabel = [None] * 5000
+#        masaLabel[index] = customtkinter.CTkLabel(parent, text=masa, width=75, height=42)
+#        masaLabel[index].pack()
+        
 
 
 if __name__ == '__main__':
@@ -402,6 +450,7 @@ self.mainanButton[z] = customtkinter.CTkButton(self.frameMainan, width=75, heigh
 
 self.mainanButton[z].grid(row=j, column=i+1, padx=4, pady=11)##################self.mainanButton list repair the list looping
                 
+
 
 
 
