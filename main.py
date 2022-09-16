@@ -256,6 +256,7 @@ class Pos :
     cancelButton = [None] * 5000
     timerMainan = [None] * 5000
     masaMainan = [None] * 5000
+    masaLabel = [None] * 5000
     runList = [None]
     labelVar = vars()
     masukVar = vars()
@@ -266,6 +267,7 @@ class Pos :
     z = 0
 
     masaLampu = 0
+    masaIndex = 0
 
 
     def __init__(self):
@@ -376,7 +378,7 @@ class Pos :
             break
         
         self.runLabel.append(customtkinter.CTkEntry(self.frameRun, width=75, height=42, text_font=('Helvetica',10)))
-        self.runLabel[runIndex].insert(0,jenis+' '+nombor)
+        self.runLabel[runIndex].insert(0,nombor)
         self.runLabel[runIndex].pack(pady=1)
 
         clicked = customtkinter.StringVar()
@@ -384,7 +386,7 @@ class Pos :
         self.runDrop[runIndex] = customtkinter.CTkOptionMenu(self.frameDrop, values=self.senaraiJenis, variable=clicked, width=75, height=42, text_font=('Helvetica',15))
         self.runDrop[runIndex].pack(pady=1)
 
-        self.masukButton[runIndex] = customtkinter.CTkButton(self.frameMasuk, width=75, height=42, text='Masuk', text_font=('Helvetica',10), command=lambda: self.masuk(runIndex))
+        self.masukButton[runIndex] = customtkinter.CTkButton(self.frameMasuk, width=75, height=42, text='Masuk', text_font=('Helvetica',10), command=lambda: self.masuk(runIndex,jenis,nombor))
         self.masukButton[runIndex].pack(pady=1)
 
         self.cancelButton[runIndex] = customtkinter.CTkButton(self.frameCancel, width=75, height=42, text='Cancel', text_font=('Helvetica',10), command=lambda: self.cancel(runIndex))
@@ -406,11 +408,22 @@ class Pos :
         
 
 
-    def masuk(self,runIndex) :
+    def masuk(self,runIndex,jenis,nombor) :
         self.runLabel[runIndex].destroy()
         self.runDrop[runIndex].destroy()
         self.masukButton[runIndex].destroy()
         self.cancelButton[runIndex].destroy()
+
+        try :
+            with open('docs/readme.txt', 'a') as f :
+                f.write(jenis+' '+nombor+'\n')
+        except FileNotFoundError:
+            with open('C:/Users/kebaq/Desktop/sale.txt', 'w') as f :
+                f.write(jenis+' '+nombor+'\n')
+
+        
+        f.write('\n'+jenis+' '+nombor)
+        
 
 
     def cancel(self,runIndex) :
@@ -421,16 +434,21 @@ class Pos :
 
 
     def timerLabel(self,runIndex) :
-        masaLabel = [None] * 5000
-        masaLabel[runIndex] = customtkinter.CTkLabel( self.timerMainan[runIndex], text=self.masaMainan[runIndex], width=75, height=42)
-        masaLabel[runIndex].pack()
-        masaLabel[runIndex].after(1000, self.update(masaLabel[runIndex],self.masaMainan[runIndex]))
+        self.masaLabel[self.masaIndex] = customtkinter.CTkLabel( self.timerMainan[runIndex], text='0', width=75, height=42)
+        self.masaLabel[self.masaIndex].pack()
+        self.masaLabel[self.masaIndex].after(1000, self.update(self.masaLabel[self.masaIndex],self.masaMainan[runIndex]))
+        self.masaIndex+=1
 
 
     def update(self,index,masa) :
-        newMasa = int(masa)-1
-        index.configure(text=str(newMasa))
-        index.after(1000, self.update(index,newMasa))
+        x = 0
+        while (x <= masa) :
+            x+=1
+            index.configure(text=str(x))
+        
+        #newMasa = int(masa)-1
+        #index.configure(text=str(newMasa))
+        #index.after(1000, self.update(index,newMasa))
 
 #        masaLabel = [None] * 5000
 #        masaLabel[index] = customtkinter.CTkLabel(parent, text=masa, width=75, height=42)

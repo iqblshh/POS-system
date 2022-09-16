@@ -246,21 +246,24 @@ print(lampu == 0)
 '''
 # Import Module
 from tkinter import *
+from turtle import onclick
 
 # Create Tkinter Object
 root = Tk()
 
 # Set Geometry
-root.geometry("400x400")
+root.geometry("1000x1000")
 
 # Frame 1
 frame1 = Frame(root,bg="black",width=500,height=300)
-frame1.pack()
+frame1.grid(row=0,column=0)
 
 # Frame 2
-frame2 = Frame(frame1,bg="white",width=100,height=100)
-frame2.pack(pady=20,padx=20)
+frame2 = Frame(root,bg="white",width=100,height=100)
+frame2.grid(row=1,column=0)
 
+btn = Button(root, command=lambda:frame1.grid_remove())
+btn.grid(row=2,column=0)
 #Button(frame2,text='pak').pack()
 
 # Execute Tkinter
